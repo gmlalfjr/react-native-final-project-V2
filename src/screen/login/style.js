@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
       paddingBottom: "5%",
       borderBottomColor: "#7f8c8d",
       borderBottomWidth: 1,
-      marginBottom: "50%"
+      marginBottom: "20%"
     }
   });
   
