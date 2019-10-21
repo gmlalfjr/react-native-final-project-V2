@@ -9,7 +9,7 @@ export default class HomeScreen extends Component {
         <Text> Ini Home </Text>
         <Button
           onPress={() => this.props.navigation.navigate("Login")}
-          title="amay"
+          title="Login"
         />
       </View>
     );
