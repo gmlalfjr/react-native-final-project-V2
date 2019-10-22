@@ -11,6 +11,11 @@ export default class HomeScreen extends Component {
           onPress={() => this.props.navigation.navigate("Login")}
           title="Login"
         />
+
+        <Button
+          onPress={() => this.props.navigation.navigate("Camera")}
+          title="take photo"
+        />
       </View>
     );
   }
