@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import HomeScreen from "./src/screen/home/HomeScreen";
-import Routes from "./src/routes/";
+import Routes from "./src/routes";
 import { AppLoading } from 'expo';
 import { Container } from 'native-base';
 import * as Font from 'expo-font';
