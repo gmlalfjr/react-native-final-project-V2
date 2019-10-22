@@ -64,6 +64,9 @@ const SwitchNavigor = createSwitchNavigator(
     TabNavigator:TabNavigator,
     Login: LoginStackNavigor 
   },
+  {
+    initialRouteName: "Login"
+  }
 )
 
 const AppContainer = createAppContainer(SwitchNavigor);
