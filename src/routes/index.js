@@ -4,6 +4,7 @@ import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { Icon } from "react-native-elements";
 import HomeStackNavigor from "./HomeRoutes";
 import LoginStackNavigor from "./LoginRoutes";
+import CameraStackNavigator from "./CameraRoutes";
 
 export default class Routes extends React.Component {
   render() {
@@ -61,12 +62,13 @@ const TabNavigator = createBottomTabNavigator(
 
 const SwitchNavigor = createSwitchNavigator(
   {
-    TabNavigator:TabNavigator,
-    Login: LoginStackNavigor 
+    TabNavigator: TabNavigator,
+    Login: LoginStackNavigor,
+    Camera: CameraStackNavigator
   },
   {
     initialRouteName: "Login"
   }
-)
+);
 
 const AppContainer = createAppContainer(SwitchNavigor);
