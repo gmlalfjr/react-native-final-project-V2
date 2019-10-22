@@ -1,7 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "react-navigation-tabs";
-import { createStackNavigator } from "react-navigation-stack";
-import { createAppContainer } from "react-navigation";
+import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { Icon } from "react-native-elements";
 import HomeStackNavigor from "./HomeRoutes";
 import LoginStackNavigor from "./LoginRoutes";
@@ -29,25 +28,6 @@ const TabNavigator = createBottomTabNavigator(
         ),
         tabBarOnPress: ({ navigation, defaultHandler }) => {
           navigation.navigate("Home");
-          defaultHandler();
-        }
-      }
-    },
-    Login: {
-      screen: LoginStackNavigor,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor, focused }) => (
-          <Icon
-            type="font-awesome"
-            name="user"
-            color={tintColor}
-            iconStyle={{
-              fontSize: 35
-            }}
-          />
-        ),
-        tabBarOnPress: ({ navigation, defaultHandler }) => {
-          navigation.navigate("login");
           defaultHandler();
         }
       }
@@ -79,4 +59,11 @@ const TabNavigator = createBottomTabNavigator(
   }
 );
 
-const AppContainer = createAppContainer(TabNavigator);
+const SwitchNavigor = createSwitchNavigator(
+  {
+    TabNavigator:TabNavigator,
+    Login: LoginStackNavigor 
+  },
+)
+
+const AppContainer = createAppContainer(SwitchNavigor);
