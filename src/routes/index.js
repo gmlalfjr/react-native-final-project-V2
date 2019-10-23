@@ -5,6 +5,7 @@ import { Icon } from "react-native-elements";
 import HomeStackNavigor from "./HomeRoutes";
 import LoginStackNavigor from "./LoginRoutes";
 import CameraStackNavigator from "./CameraRoutes";
+import CustomerStackNavigor from "./CustomerRoutes";
 
 export default class Routes extends React.Component {
   render() {
@@ -26,11 +27,22 @@ const TabNavigator = createBottomTabNavigator(
               fontSize: 35
             }}
           />
-        ),
-        tabBarOnPress: ({ navigation, defaultHandler }) => {
-          navigation.navigate("Home");
-          defaultHandler();
-        }
+        )
+      }
+    },
+    Customer: {
+      screen: CustomerStackNavigor,
+      navigationOptions: {
+        tabBarIcon: ({ tintColor, focused }) => (
+          <Icon
+            type="font-awesome"
+            name="user"
+            color={tintColor}
+            iconStyle={{
+              fontSize: 35
+            }}
+          />
+        )
       }
     }
   },
