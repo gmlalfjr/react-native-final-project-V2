@@ -143,7 +143,7 @@ export default class LoginScreen extends Component {
               <Circle r={height + 50} cx={width / 2} />
             </ClipPath>
           <Image
-            href={require('./../../../assets/bg.jpg')}
+            href={require('./../../../assets/WelCome.jpg')}
             width={width}
             height={height + 50}
             preserveAspectRatio="xMidYMid slice"
@@ -163,26 +163,13 @@ export default class LoginScreen extends Component {
               <Text style={{ fontSize: 20, fontWeight: 'bold' }}>LOGIN</Text>
             </Animated.View>
           </TapGestureHandler>
-          <Animated.View
-            style={{
-              ...styles.button,
-              backgroundColor: '#2E71DC',
-              opacity: this.buttonOpacity,
-              transform: [{ translateY: this.buttonY }]
-            }}
-          >
-            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>
-              LOGIN IN WITH FACEBOOK
-            </Text>
-          </Animated.View>
+          
           <Animated.View style={{zIndex: this.textInputZindex, opacity: this.textInputOpacity, transform:[{translateY: this.textInputY}], height:height/3,...StyleSheet.absoluteFill,top: null, justifyContent: "center"}}>
             <TapGestureHandler onHandlerStateChange={this.onCloseState}>
               <Animated.View style={styles.closeButton}>
                 <Animated.Text style={{fontSize: 15,transform:[{ rotate: concat(this.rotateCross, 'deg') }]}}>X</Animated.Text>
               </Animated.View>
             </TapGestureHandler>
-
-
             <TextInput placeholder="Username" style={styles.textInput} placeholderTextColor="black" />
             <TextInput placeholder="Password" style={styles.textInput} placeholderTextColor="black" />
             <Animated.View style={styles.button}>
