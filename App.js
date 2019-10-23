@@ -2,24 +2,27 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import HomeScreen from "./src/screen/home/HomeScreen";
 import Routes from "./src/routes";
-import { AppLoading } from 'expo';
-import { Container } from 'native-base';
-import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
+import { AppLoading } from "expo";
+import { Container } from "native-base";
+import * as Font from "expo-font";
+import { Ionicons } from "@expo/vector-icons";
+
+import { Provider } from "react-redux";
+import { store } from "./src/utils/store";
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isReady: false,
+      isReady: false
     };
   }
 
   async componentDidMount() {
     await Font.loadAsync({
-      Roboto: require('native-base/Fonts/Roboto.ttf'),
-      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-      ...Ionicons.font,
+      Roboto: require("native-base/Fonts/Roboto.ttf"),
+      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+      ...Ionicons.font
     });
     this.setState({ isReady: true });
   }
@@ -30,9 +33,11 @@ export default class App extends Component {
     }
 
     return (
-      <Container>
-        <Routes />
-      </Container>
+      <Provider store={store}>
+        <Container>
+          <Routes />
+        </Container>
+      </Provider>
     );
   }
 }
