@@ -19,12 +19,73 @@ import {
   UPDATE_CUSTOMER_SUCCES
 } from "../actions/CustomersActions";
 
+const initFindOneState = {
+  data: [],
+  loading: false,
+  error: null
+};
+export function findOneCustomers(state = initFindOneState, action) {
+  console.log(action);
+  switch (action.type) {
+    case FIND_CUSTOMER:
+      return {
+        ...initFindAllState,
+        loading: true,
+        error: null
+      };
+    case FIND_CUSTOMER_SUCCES:
+      return {
+        ...state,
+        data: action.data,
+        loading: false,
+        error: null
+      };
+    case FIND_CUSTOMER_ERROR:
+      return {
+        ...state,
+        error: action.error,
+        loading: false
+      };
+    default:
+      return state;
+  }
+}
+
+const initUpdateState = {
+  data: [],
+  loading: false,
+  error: null
+};
+export function updateCustomer(state = initUpdateState, action) {
+  switch (action.type) {
+    case UPDATE_CUSTOMER:
+      return {
+        ...initFindAllState,
+        loading: true,
+        error: null
+      };
+    case UPDATE_CUSTOMER_SUCCES:
+      return {
+        ...state,
+        data: action.data,
+        loading: false,
+        error: null
+      };
+    case UPDATE_CUSTOMER_ERROR:
+      return {
+        ...state,
+        error: action.error,
+        loading: false
+      };
+    default:
+      return state;
+  }
+}
 const initFindAllState = {
   data: [],
   loading: false
 };
 export function findAllCustomers(state = initFindAllState, action) {
-  console.log(action);
   switch (action.type) {
     case FIND_ALL_CUSTOMERS:
       return {
