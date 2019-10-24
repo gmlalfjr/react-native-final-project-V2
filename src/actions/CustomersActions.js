@@ -22,8 +22,34 @@ export const SEARCH_CUSTOMER = "SEARCH_CUSTOMER";
 export const SEARCH_CUSTOMER_SUCCES = "SEARCH_CUSTOMER_SUCCES";
 export const SEARCH_CUSTOMER_ERROR = "SEARCH_STUDENT_ERROR";
 
+// export const GET_CIF_CUSTOMER = "GET_CIF_CUSTOME";
+// export const GET_CIF_CUSTOMER_SUCCES = "GET_CIF_CUSTOMER_SUCCES";
+// export const GET_CIF_CUSTOMER_ERROR = "GET_CIF_CUSTOMER_ERROR";
+
 export function findAllCustomers() {
   return {
     type: FIND_ALL_CUSTOMERS
   };
 }
+
+export function findOneCustomers(cif) {
+  return {
+    type: FIND_CUSTOMER,
+    cif: cif
+  };
+}
+
+export function updateCustomers(cif, param) {
+  return {
+    type: FIND_CUSTOMER,
+    cif: cif,
+    param: param
+  };
+}
+
+// export function getCustomerByCif(cif) {
+//   return {
+//     type: GET_CIF_CUSTOMER,
+//     cif: cif
+//   };
+// }

@@ -1,6 +1,14 @@
 import { combineReducers } from "redux";
-import { findAllCustomers } from "./CustomersReducer";
+import {
+  findAllCustomers,
+  findOneCustomers,
+  updateCustomer
+} from "./CustomersReducer";
+import { getByCIF } from "./AccountReducer";
 const allReducers = combineReducers({
-  findAllCustomers
+  findAllCustomers,
+  findOneCustomers,
+  updateCustomer,
+  getByCIF
 });
 export default allReducers;

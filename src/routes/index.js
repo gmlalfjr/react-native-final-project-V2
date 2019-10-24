@@ -6,7 +6,8 @@ import HomeStackNavigor from "./HomeRoutes";
 import LoginStackNavigor from "./LoginRoutes";
 import CameraStackNavigator from "./CameraRoutes";
 import CustomerStackNavigor from "./CustomerRoutes";
-
+import SearchStackNavigator from "./SearchRoutes";
+import SearchStackNavigor from "./SearchRoutes";
 export default class Routes extends React.Component {
   render() {
     return <AppContainer />;
@@ -37,6 +38,21 @@ const TabNavigator = createBottomTabNavigator(
           <Icon
             type="font-awesome"
             name="user"
+            color={tintColor}
+            iconStyle={{
+              fontSize: 35
+            }}
+          />
+        )
+      }
+    },
+    Search: {
+      screen: SearchStackNavigor,
+      navigationOptions: {
+        tabBarIcon: ({ tintColor, focused }) => (
+          <Icon
+            type="font-awesome"
+            name="search"
             color={tintColor}
             iconStyle={{
               fontSize: 35
