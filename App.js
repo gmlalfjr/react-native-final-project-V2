@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import HomeScreen from "./src/screen/home/HomeScreen";
+import { StyleSheet } from "react-native";
+import GeneralStatusBarColor from "./src/components/GeneralStatusBarColor";
 import Routes from "./src/routes";
 import { AppLoading } from "expo";
 import { Container } from "native-base";
@@ -35,6 +35,7 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <Container>
+          <GeneralStatusBarColor backgroundColor="#2c3e50" barStyle="light-content" />
           <Routes />
         </Container>
       </Provider>

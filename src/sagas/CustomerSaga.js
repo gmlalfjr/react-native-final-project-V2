@@ -22,13 +22,13 @@ import {
 import Axios from "axios";
 
 async function api() {
-  const response = await Axios.get("http://192.168.1.8:8080/customer/ ");
+  const response = await Axios.get("http://192.168.1.13:8080/customer/ ");
   const data = await response;
   return data;
 }
 
 async function getOneData(cif) {
-  const response = await Axios.get("http://192.168.1.8:8080/customer/" + cif);
+  const response = await Axios.get("http://192.168.1.13:8080/customer/" + cif);
   const data = await response;
   return data;
 }
