@@ -4,21 +4,15 @@ import CustomerDetailScreen from "../screen/customer/CustomerDetailScreen";
 const CustomerStackNavigor = createStackNavigator(
   {
     Customer: {
-      screen: CustomerScreen,
-      navigationOptions: {
-        title: "Customer"
-      }
+      screen: CustomerScreen
     },
     CutomerDetail: {
-      screen: CustomerDetailScreen,
-      navigationOptions: {
-        title: "Customer Detail"
-      }
+      screen: CustomerDetailScreen
     }
   },
-
   {
-    initialRouteName: "Customer"
+    initialRouteName: "Customer",
+    headerMode: "none"
   }
 );
 

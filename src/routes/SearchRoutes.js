@@ -5,13 +5,13 @@ const SearchStackNavigor = createStackNavigator(
     Search: {
       screen: SearchScreen,
       navigationOptions: {
-        title: "Search"
       }
     }
   },
 
   {
-    initialRouteName: "Search"
+    initialRouteName: "Search",
+    headerMode: "none"
   }
 );
 

@@ -1,15 +1,19 @@
 import React, { Component } from "react";
-import { TextInput, Button, Alert, View } from "react-native";
+import { StyleSheet, Alert, Image, RefreshControl } from "react-native";
+import { ListItem, Button as ButtonEl } from "react-native-elements";
+import { Block } from '../../components';
+import { theme } from '../../constants';
 import { connect } from "react-redux";
-import {
+import { 
   Container,
+  Header,
   Content,
-  Form,
-  Input,
-  Item,
-  Label,
-  Text
-} from "native-base";
+  List,
+  Text,
+  Icon,
+  Button,
+  Toast,
+  Left, } from "native-base";
 import {
   findOneCustomers,
   updateCustomers
@@ -65,24 +69,86 @@ class CustomerDetailScreen extends Component {
     }
   }
 
-  async onUpdate() {
-    const updateData = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      address: this.state.address,
-      birthDate: this.state.birthDate,
-      birthPlace: this.state.birthPlace
-    };
-    const data = await this.props.updateCustomers(this.state.id, updateData);
-    return data;
-  }
-
   render() {
     return (
       <Container>
-        {/* <CustomHeader navigation={this.props.navigation} firstName="Books Detail" /> */}
-        <Content padder>
-          <Form>
+        <Header>
+          <Button
+            transparent
+            style={styles.iconBack}
+            onPress={() => this.props.navigation.navigate('Customer')}
+          >
+            <Icon name="angle-left" type="FontAwesome5" />
+          </Button>
+          <Image source={require('../../../assets/image.png')} style={{width: 105, height: 33, top: 12}}/>
+        </Header>
+        <Block flex={false} row style={styles.tabs}>
+            <Text style={styles.textHeader}>Info {this.state.firstName}</Text>
+        </Block>
+        <Content padder refreshControl={<RefreshControl refreshing={this.props.loading} onRefresh={() => this.reload()}/>}>
+          <List>
+            <ListItem
+              title="Address"
+              rightTitle={this.state.address ? this.state.address.toString() : ""}
+              hideChevron
+              style={{borderBottomWidth: StyleSheet.hairlineWidth}}
+            />
+            <ButtonEl
+              title="Info Account"
+              buttonStyle={{ marginTop: 20 }}
+              onPress={this.handleSettingsPress}
+            />
+          </List>
+        </Content>
+      </Container>
+    );
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    loading: state.findOneCustomers.loading,
+    data: state.findOneCustomers.data || state.getByCIF.data,
+    update: state.updateCustomer.data,
+    error: state.findOneCustomers.error
+  };
+}
+function matchDispatchToProps(dispatch) {
+  return bindActionCreators(
+    { findOneCustomers, updateCustomers, getAccountByCIF },
+    dispatch
+  );
+}
+
+export default connect(
+  mapStateToProps,
+  matchDispatchToProps
+)(CustomerDetailScreen);
+
+const styles = StyleSheet.create({
+  iconBack: {
+    zIndex: 9,
+    position: "absolute",
+    top: 6,
+    left: 5
+  },
+  tabs: {
+    borderBottomColor: theme.colors.gray2,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    marginVertical: theme.sizes.base,
+    marginHorizontal: theme.sizes.base * 2,
+    marginBottom: 1
+  },
+  textHeader: {
+    fontSize: 26,
+    fontWeight: "bold",
+    paddingBottom: 10
+  },
+  list: {
+    marginRight: 32
+  }
+})
+{/* <Form>
             <Item floatingLabel>
               <Label> firstName </Label>
               <Input
@@ -134,29 +200,4 @@ class CustomerDetailScreen extends Component {
               }}
               title="submit"
             />
-          </Form>
-        </Content>
-      </Container>
-    );
-  }
-}
-
-function mapStateToProps(state) {
-  return {
-    data: state.findOneCustomers.data || state.getByCIF.data,
-
-    update: state.updateCustomer.data,
-    error: state.findOneCustomers.error
-  };
-}
-function matchDispatchToProps(dispatch) {
-  return bindActionCreators(
-    { findOneCustomers, updateCustomers, getAccountByCIF },
-    dispatch
-  );
-}
-
-export default connect(
-  mapStateToProps,
-  matchDispatchToProps
-)(CustomerDetailScreen);
+          </Form> */}

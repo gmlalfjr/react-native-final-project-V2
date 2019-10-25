@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Dimensions, TextInput } from 'react-native';
 import { styles } from "./style"
-import {  Button as Butts } from 'react-native-elements';
 import Svg, {Image, Circle, ClipPath} from "react-native-svg";
 import Animated, { Easing } from 'react-native-reanimated';
 import { TapGestureHandler, State } from 'react-native-gesture-handler';
@@ -93,7 +92,7 @@ export default class LoginScreen extends Component {
 
     this.bgY = interpolate(this.buttonOpacity, {
       inputRange: [0, 1],
-      outputRange: [-height / 3 - 50, 0],
+      outputRange: [-height / 3 - 70, 0],
       extrapolate: Extrapolate.CLAMP
     });
 
@@ -173,7 +172,7 @@ export default class LoginScreen extends Component {
             <TextInput placeholder="Username" style={styles.textInput} placeholderTextColor="black" />
             <TextInput placeholder="Password" style={styles.textInput} placeholderTextColor="black" />
             <Animated.View style={styles.button}>
-              <Text style={{fontSize:20, fontWeight: "bold"}} onPress={() => this.props.navigation.navigate("TabNavigator")} >LOGIN</Text>
+              <Text style={{fontSize:20, fontWeight: "bold"}} onPress={() => this.props.navigation.navigate("Home")} >LOGIN</Text>
             </Animated.View>
           </Animated.View>
         </View>
