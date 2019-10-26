@@ -3,8 +3,8 @@ import HomeScreen from "../screen/home/HomeScreen";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { Icon } from "native-base";
-import SearchStackNavigor from "./SearchRoutes";
 import CustomerStackNavigor from "./CustomerRoutes";
+import CameraStackNavigator from "./CameraRoutes";
 
 const TabNavigatorCustomer = createBottomTabNavigator(
   {
@@ -23,13 +23,13 @@ const TabNavigatorCustomer = createBottomTabNavigator(
         )
       }
     },
-    Search: {
-      screen: SearchStackNavigor,
+    QR: {
+      screen: CameraStackNavigator,
       navigationOptions: {
         tabBarIcon: ({ tintColor, focused }) => (
           <Icon
             type="FontAwesome" 
-            name="search"
+            name="qrcode"
             color={tintColor}
             iconStyle={{
               fontSize: 35
@@ -67,7 +67,7 @@ const TabNavigatorCustomer = createBottomTabNavigator(
     }
   }
 );
-const TabNavigatorSearch = createBottomTabNavigator(
+const TabNavigatorQR = createBottomTabNavigator(
   {
     Customer: {
       screen: CustomerStackNavigor,
@@ -84,13 +84,13 @@ const TabNavigatorSearch = createBottomTabNavigator(
         )
       }
     },
-    Search: {
-      screen: SearchStackNavigor,
+    QR: {
+      screen: CameraStackNavigator,
       navigationOptions: {
         tabBarIcon: ({ tintColor, focused }) => (
           <Icon
             type="FontAwesome"
-            name="search"
+            name="qrcode"
             color={tintColor}
             iconStyle={{
               fontSize: 35
@@ -101,7 +101,7 @@ const TabNavigatorSearch = createBottomTabNavigator(
     }
   },
   {
-    initialRouteName: "Search"
+    initialRouteName: "QR"
   },
   {
     defaultNavigationOptions: {
@@ -131,7 +131,7 @@ const TabNavigatorSearch = createBottomTabNavigator(
 
 const HomeStackNavigor = createStackNavigator(
   {
-    Search: TabNavigatorSearch,
+    QR: TabNavigatorQR,
     Customer: TabNavigatorCustomer,
     Home: {
       screen: HomeScreen
