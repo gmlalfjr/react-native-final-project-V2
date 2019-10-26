@@ -6,7 +6,7 @@ import { AppLoading } from "expo";
 import { Container } from "native-base";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
-
+import { Root } from "native-base";
 import { Provider } from "react-redux";
 import { store } from "./src/utils/store";
 
@@ -34,10 +34,12 @@ export default class App extends Component {
 
     return (
       <Provider store={store}>
-        <Container>
-          <GeneralStatusBarColor backgroundColor="#2c3e50" barStyle="light-content" />
-          <Routes />
-        </Container>
+        <Root>
+          <Container>
+            <GeneralStatusBarColor backgroundColor="#2c3e50" barStyle="light-content" />
+            <Routes />
+          </Container>
+        </Root>
       </Provider>
     );
   }

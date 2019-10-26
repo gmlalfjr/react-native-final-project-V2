@@ -1,12 +1,15 @@
 import * as React from "react";
-import { Text, View, StyleSheet, Button, Alert, Linking } from "react-native";
+import { Text, View, StyleSheet, Button, Alert, Image } from "react-native";
 import { Button as BUts } from "react-native-elements";
-import Constants from "expo-constants";
+import { Header, Button as ButtoN, Icon, Container  } from "native-base";
 import * as Permissions from "expo-permissions";
 import { findOneCustomers } from "../../actions/CustomersActions";
 import { bindActionCreators } from "redux";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { connect } from "react-redux";
+import { theme } from "../../constants";
+import { Block } from "../../components";
+
 class BarcodeScannerExample extends React.Component {
   state = {
     hasCameraPermission: null,
@@ -32,29 +35,42 @@ class BarcodeScannerExample extends React.Component {
       return <Text>No access to camera</Text>;
     }
     return (
-      <View
+      <Container>
+        <Header>
+            <ButtoN
+              transparent
+              style={styles.iconBack}
+              onPress={() => this.props.navigation.navigate("Home")}
+            >
+              <Icon name="angle-left" type="FontAwesome5" />
+            </ButtoN>
+            <Image
+              source={require("../../../assets/image.png")}
+              style={{ width: 105, height: 33, top: 12 }}
+            />
+          </Header>
+        <Block flex={false} row style={styles.tabs}>
+          <Text style={styles.textHeader}>Customers</Text>
+        </Block>
+        <View
         style={{
           flex: 1,
           flexDirection: "column",
           justifyContent: "flex-end"
-        }}
-      >
-        <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanned}
-          style={StyleSheet.absoluteFillObject}
-        />
-        <BUts
-          title="back"
-          containerStyle={{ marginBottom: 20 }}
-          onPress={() => this.props.navigation.navigate("TabNavigator")}
-        />
-        {scanned && (
-          <Button
-            title={"Tap to Scan Again"}
-            onPress={() => this.setState({ scanned: false })}
+          }}
+          >
+          <BarCodeScanner
+            onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanned}
+            style={StyleSheet.absoluteFillObject}
           />
-        )}
-      </View>
+          {scanned && (
+            <Button
+              title={"Tap to Scan Again"}
+              onPress={() => this.setState({ scanned: false })}
+            />
+          )}
+        </View>
+      </Container>
     );
   }
 
@@ -107,3 +123,24 @@ export default connect(
   mapStateToProps,
   matchDispatchToProps
 )(BarcodeScannerExample);
+
+const styles = StyleSheet.create({
+  iconBack: {
+    zIndex: 9,
+    position: "absolute",
+    top: 6,
+    left: 5
+  },
+  tabs: {
+    borderBottomColor: theme.colors.gray2,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    marginVertical: theme.sizes.base,
+    marginHorizontal: theme.sizes.base * 2,
+    marginBottom: 2
+  },
+  textHeader: {
+    fontSize: 26,
+    fontWeight: "bold",
+    paddingBottom: 10
+  }
+});

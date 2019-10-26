@@ -15,10 +15,8 @@ import {
   Toast,
   Left, } from "native-base";
 import {
-  findOneCustomers,
-  updateCustomers
+  findOneCustomers
 } from "../../actions/CustomersActions";
-import { getAccountByCIF } from "../../actions/CustomerAccount";
 import { bindActionCreators } from "redux";
 class CustomerDetailScreen extends Component {
   constructor(props) {
@@ -39,12 +37,12 @@ class CustomerDetailScreen extends Component {
 
   reload() {
     this.props.findOneCustomers(this.state.cif);
-    this.props.getAccountByCIF("KKKK");
   }
   componentDidUpdate(prevProps, prevState) {
-    const { data } = this.props;
+    const { data, error } = this.props;
     if (data && prevProps.data !== data) {
       this.setState({
+        cif: data.cif,
         firstName: data.firstName,
         lastName: data.lastName,
         address: data.address,
@@ -52,20 +50,13 @@ class CustomerDetailScreen extends Component {
         birthPlace: data.birthPlace
       });
     }
-    if (this.props.error != null) {
-      if (this.props.error) {
-        Alert.alert(
-          "Error Message",
-          ` Something Error`,
-          [
-            {
-              text: "Ok",
-              style: "cancel"
-            }
-          ],
-          { cancelable: true }
-        );
-      }
+    if (error && prevProps.error !== error) {
+      Toast.show({
+        text: error.message,
+        buttonText: 'Ok',
+        type: "danger",
+        duration: 5000
+      })
     }
   }
 
@@ -86,17 +77,18 @@ class CustomerDetailScreen extends Component {
             <Text style={styles.textHeader}>Info {this.state.firstName}</Text>
         </Block>
         <Content padder refreshControl={<RefreshControl refreshing={this.props.loading} onRefresh={() => this.reload()}/>}>
-          <List>
+          <List style={styles.list}>
+            <ListItem
+              title="Cif"
+              rightTitle={this.state.cif}
+              hideChevron
+              style={{borderBottomWidth: StyleSheet.hairlineWidth}}
+            />
             <ListItem
               title="Address"
               rightTitle={this.state.address ? this.state.address.toString() : ""}
               hideChevron
               style={{borderBottomWidth: StyleSheet.hairlineWidth}}
-            />
-            <ButtonEl
-              title="Info Account"
-              buttonStyle={{ marginTop: 20 }}
-              onPress={this.handleSettingsPress}
             />
           </List>
         </Content>
@@ -108,14 +100,13 @@ class CustomerDetailScreen extends Component {
 function mapStateToProps(state) {
   return {
     loading: state.findOneCustomers.loading,
-    data: state.findOneCustomers.data || state.getByCIF.data,
-    update: state.updateCustomer.data,
+    data: state.findOneCustomers.data,
     error: state.findOneCustomers.error
   };
 }
 function matchDispatchToProps(dispatch) {
   return bindActionCreators(
-    { findOneCustomers, updateCustomers, getAccountByCIF },
+    { findOneCustomers },
     dispatch
   );
 }
@@ -145,59 +136,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10
   },
   list: {
-    marginRight: 32
+    marginRight: 32,
+    marginLeft: 32
   }
 })
-{/* <Form>
-            <Item floatingLabel>
-              <Label> firstName </Label>
-              <Input
-                onChangeText={TextInput => {
-                  this.setState({ firstName: TextInput });
-                }}
-                value={this.state.firstName}
-              />
-            </Item>
-            <Item floatingLabel>
-              <Label>last name</Label>
-              <Input
-                onChangeText={TextInput => {
-                  this.setState({ lastName: TextInput });
-                }}
-                value={this.state.lastName}
-              />
-            </Item>
-            <Item floatingLabel>
-              <Label>address</Label>
-              <Input
-                onChangeText={TextInput => {
-                  this.setState({ address: TextInput });
-                }}
-                value={"" + this.state.address}
-              />
-            </Item>
-            <Item floatingLabel>
-              <Label>birthDate</Label>
-              <Input
-                onChangeText={TextInput => {
-                  this.setState({ birthDate: TextInput });
-                }}
-                value={"" + this.state.birthDate}
-              />
-            </Item>
-            <Item floatingLabel>
-              <Label>birthPlace</Label>
-              <Input
-                onChangeText={TextInput => {
-                  this.setState({ birthPlace: TextInput });
-                }}
-                value={"" + this.state.birthPlace}
-              />
-            </Item>
-            <Button
-              onPress={() => {
-                this.onUpdate();
-              }}
-              title="submit"
-            />
-          </Form> */}

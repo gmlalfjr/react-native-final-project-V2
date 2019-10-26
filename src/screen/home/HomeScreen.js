@@ -86,7 +86,7 @@ export default class HomeScreen extends Component {
                     <Text medium height={20}>m-Payment</Text>
                   </Card>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Search')}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('QR')}>
                   <Card center middle shadow style={styles.bodyMenu}>
                     <Badge margin={[0, 0, 15]} size={50} color="rgba(0, 162, 255, 1)">
                       <Image source={require('../../../assets/icons/qr-code.png')} />

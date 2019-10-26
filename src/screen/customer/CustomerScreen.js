@@ -1,103 +1,72 @@
 import React, { Component } from "react";
-import { View, Image, RefreshControl, StyleSheet } from "react-native";
-import { SearchBar, Icon as Icons } from "react-native-elements";
-import { connect } from "react-redux";
+import { Text, Image, StyleSheet } from "react-native";
+import { SearchBar } from "react-native-elements";
+import { findOneCustomers } from "../../actions/CustomersActions";
 import { bindActionCreators } from "redux";
-import {
-  findAllCustomers,
-  findOneCustomers
-} from "../../actions/CustomersActions";
-
 import * as Animatable from "react-native-animatable";
-import { Block } from "../../components";
+import { connect } from "react-redux";
 import { theme } from "../../constants";
+import { Block } from "../../components";
 import {
-  Container,
-  Header,
-  Content,
-  ListItem,
-  Text,
-  Body,
-  Right,
-  Button,
-  Icon,
-  Toast
-} from "native-base";
+    Container,
+    Header,
+    Content,
+    ListItem,
+    Body,
+    Right,
+    Button,
+    Icon,
+    Toast
+  } from "native-base";
 class CustomerScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      search: ""
-    };
-    const { navigation } = this.props;
-  }
+  state = {
+    search: "",
+    cif: null
+  };
+
   componentDidMount() {
-    this.reload();
+    this.onReload();
   }
-
-  reload() {
-    this.props.findAllCustomers();
-  }
-
   onReload() {
     this.props.findOneCustomers(this.state.search);
   }
   updateSearch = search => {
     this.setState({ search: search });
   };
-
   componentDidUpdate(prevProps, prevState) {
-    const { error } = this.props;
+    const { data, error } = this.props;
+    if (data && prevProps.data == data) {
+      this.onReload();
+    }
     if (error && prevProps.error !== error) {
       Toast.show({
         text: error.message,
-        buttonText: "Ok",
-        type: "danger",
-        duration: 5000
-      });
-    }
-    const { searchData } = this.props;
-    if (searchData && prevProps.searchData == searchData) {
-      this.onReload();
+        buttonText: 'Ok',
+        type: "warning",
+        duration: 1000,
+        position: 'top'
+      })
     }
   }
 
   showDetail(cif) {
-    this.props.navigation.navigate("CutomerDetail", { cif });
-  }
-
-  renderListItem(data, index) {
-    
-    return (
-        <ListItem
-          thumbnail
-          style={styles.list}
-          key={"item-" + index}
-          onPress={() => this.showDetail(data.cif)}
-        >
-          <Body>
-            <Text numberOfLines={1}>{data.firstName}</Text>
-            <Text note numberOfLines={1}>
-              Address : {data.address}
-            </Text>
-          </Body>
-          <Right>
-            <Button
-              transparent
-              key={"item-" + index}
-              onPress={() => this.showDetail(data.cif)}
-            >
-              <Animatable.View animation="fadeInLeft">
-                <Icon name="angle-right" type="FontAwesome5" />
-              </Animatable.View>
-            </Button>
-          </Right>
-        </ListItem>
-    );
+    const { error } = this.props;
+    if (cif != null) {
+      this.props.navigation.navigate("CutomerDetail", { cif });
+    } else {
+      Toast.show({
+        text: "Cif Already Exist",
+        buttonText: 'Ok',
+        type: "danger",
+        duration: 5000,
+        position: 'top'
+      })
+    }
   }
 
   render() {
     const { search } = this.state;
+    const { data } = this.props;
     return (
       <Container>
         <Header>
@@ -113,33 +82,42 @@ class CustomerScreen extends Component {
             style={{ width: 105, height: 33, top: 12 }}
           />
         </Header>
-        <SearchBar
-          containerStyle={{ width: "100%" }}
-          placeholder="Type Here..."
-          onChangeText={this.updateSearch}
-          value={search}
-        />
-        <Block flex={false} row style={styles.tabs}>
-          <Text style={styles.textHeader}>Customers</Text>
-        </Block>
-        <Content
-          refreshControl={
-            <RefreshControl
-              refreshing={this.props.loading}
-              onRefresh={() => this.reload()}
-            />
-          }
+          <SearchBar
+            containerStyle={{ width: "100%" }}
+            placeholder="Type Here CIF..."
+            onChangeText={this.updateSearch}
+            value={search}
+            platform= "ios"
+          />
+          <Block flex={false} row style={styles.tabs}>
+            <Text style={styles.textHeader}>Customers</Text>
+          </Block>
+        <ListItem
+          style={styles.list}
+          onPress={() => this.showDetail(data.cif)}
         >
-          {this.props.data.length ? (
-            this.props.data.map((data, index) =>
-              this.renderListItem(data, index)
-            )
-          ) : (
-            <View style={{ justifyContent: "center", alignItems: "center" }}>
-              <Text>Loading....</Text>
-            </View>
-          )}
-        </Content>
+          <Body>
+            <Text numberOfLines={1}>
+              Cif           : {data.firstName}
+            </Text>
+            <Text numberOfLines={1}>
+              Name     : {data.firstName}
+            </Text>
+            <Text numberOfLines={1}>
+              Address : {data.address}
+            </Text>
+          </Body>
+          <Right>
+            <Button
+              transparent
+              onPress={() => this.showDetail(data.cif)}
+            >
+              <Animatable.View animation="fadeInLeft">
+                <Icon name="angle-right" type="FontAwesome5" />
+              </Animatable.View>
+            </Button>
+          </Right>
+        </ListItem>
       </Container>
     );
   }
@@ -147,13 +125,13 @@ class CustomerScreen extends Component {
 
 function mapStateToProps(state) {
   return {
-    loading: state.findAllCustomers.loading,
-    data: state.findAllCustomers.data,
-    searchData: state.findOneCustomers.data
+    loading: state.findOneCustomers.loading,
+    data: state.findOneCustomers.data,
+    error: state.findOneCustomers.error,
   };
 }
 function matchDispatchToProps(dispatch) {
-  return bindActionCreators({ findAllCustomers, findOneCustomers }, dispatch);
+  return bindActionCreators({ findOneCustomers }, dispatch);
 }
 
 export default connect(
@@ -181,6 +159,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10
   },
   list: {
-    marginRight: 32
+    marginRight: 32,
+    marginLeft: 32
   }
 });
