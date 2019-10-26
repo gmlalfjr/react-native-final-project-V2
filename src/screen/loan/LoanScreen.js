@@ -17,16 +17,22 @@ import {
   Text,
   Toast
 } from "native-base";
-import { getAccountByCIF } from "../../actions/CustomerAccount";
+import { findLoan } from "../../actions/LoanAction";
 import { bindActionCreators } from "redux";
 class LoanScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      customerCif: this.props.navigation.getParam("cif"),
-      accountNumber: null,
-      accountBalance: null,
-      createdAt: null,
+      accountNumber: this.props.navigation.getParam("accountNumber"),
+      loanId: null,
+      loanAmount: null,
+      loanBalance: null,
+      loanStatus: null,
+      openDate: null,
+      dueDate: null,
+      loanTenor: null,
+      loanTypeCode: null,
+      customerCif: null,
     };
   }
 
@@ -35,7 +41,7 @@ class LoanScreen extends Component {
   }
 
   reload() {
-    this.props.getAccountByCIF(this.props.navigation.getParam("cif"));
+    this.props.findLoan(this.props.navigation.getParam("accountNumber"));
   }
   componentDidUpdate(prevProps, prevState) {
     const { error } = this.props;
@@ -50,9 +56,9 @@ class LoanScreen extends Component {
     }
   }
 
-  showDetail(cif) {
-    if (cif != null) {
-      this.props.navigation.navigate("CutomerAccount", { cif:cif });
+  showDetail(loanId) {
+    if (loanId != null) {
+      this.props.navigation.navigate("CutomerAccount", { loanId:loanId });
     } else {
       Toast.show({
         text: "Cif Already Exist",
@@ -66,20 +72,24 @@ class LoanScreen extends Component {
 
   renderListItem(data, index) {
     return (
-      <ListItem thumbnail  key={"item-" + index} onPress={() => this.showDetail(data.accountNumber)}>
-            <Body>
-              <Text note numberOfLines={1}>Number Account : {data.accountNumber}</Text>
-              <Text note numberOfLines={1}>Balance                 : Rp {data.accountBalance}</Text>
-              <Text note numberOfLines={1}>Create Date          : {data.createdAt}</Text>
-            </Body>
-            <Right>
-              <Button transparent>
-                <Animatable.View animation="fadeInLeft">
-                <Icon name="angle-right" type="FontAwesome5" />
-                </Animatable.View>
-              </Button>
-            </Right>
-          </ListItem>
+      <ListItem thumbnail style={styles.list} key={"item-" + index}>
+        <Body>
+          <Text note numberOfLines={1}>ID                 : {data.loanId}</Text>
+          <Text note numberOfLines={1}>Amount       : Rp. {data.loanAmount}</Text>
+          <Text note numberOfLines={1}>Balance      : Rp. {data.loanBalance}</Text>
+          <Text note numberOfLines={1}>Status         : {data.loanStatus}</Text>
+          <Text note numberOfLines={1}>Open Date  : {data.openDate}</Text>
+          <Text note numberOfLines={1}>Due Date     : {data.dueDate}</Text>
+          <Text note numberOfLines={1}>Tenor           : {data.loanTenor}</Text>
+          <Text note numberOfLines={1}>Type Code  : {data.loanTypeCode}</Text>
+          <Text note numberOfLines={1}>CIF               : {data.customerCif}</Text>
+          <Button onPress={() => this.showDetail(data.loanId)}>
+            <Animatable.View animation="flash">
+              <Text style={{textAlign: 'center'}}>Billing</Text>
+            </Animatable.View>
+          </Button>
+        </Body>
+      </ListItem>
     );
   }
   
@@ -90,14 +100,14 @@ class LoanScreen extends Component {
           <Button
             transparent
             style={styles.iconBack}
-            onPress={() => this.props.navigation.navigate('Customer')}
+            onPress={() => this.props.navigation.navigate('CustomerAccount')}
           >
             <Icon name="angle-left" type="FontAwesome5" />
           </Button>
           <Image source={require('../../../assets/image.png')} style={{width: 105, height: 33, top: 12}}/>
         </Header>
         <Block flex={false} row style={styles.tabs}>
-            <Text style={styles.textHeader}>Account {this.props.navigation.getParam("cif")}</Text>
+            <Text style={styles.textHeader}>Account {this.props.navigation.getParam("accountNumber")}</Text>
         </Block>
         <Content padder refreshControl={<RefreshControl refreshing={this.props.loading} onRefresh={() => this.reload()}/>}>
           {this.props.data.length  ?  this.props.data.map((data, index)=>(this.renderListItem(data, index))) :<Text>Loading...</Text>}  
@@ -109,14 +119,14 @@ class LoanScreen extends Component {
 
 function mapStateToProps(state) {
   return {
-    loading: state.getByCIF.loading,
-    data: state.getByCIF.data,
-    error: state.getByCIF.error
+    loading: state.findLoan.loading,
+    data: state.findLoan.data,
+    error: state.findLoan.error
   };
 }
 function matchDispatchToProps(dispatch) {
   return bindActionCreators(
-    { getAccountByCIF },
+    { findLoan },
     dispatch
   );
 }
