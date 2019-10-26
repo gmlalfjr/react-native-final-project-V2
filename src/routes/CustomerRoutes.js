@@ -1,13 +1,13 @@
 import { createStackNavigator } from "react-navigation-stack";
 import CustomerScreen from "../screen/customer/CustomerScreen";
-import CustomerDetailScreen from "../screen/customer/CustomerDetailScreen";
+import CustomerAccountStackNavigor from "./AccountRoutes";
 const CustomerStackNavigor = createStackNavigator(
   {
     Customer: {
       screen: CustomerScreen
     },
-    CutomerDetail: {
-      screen: CustomerDetailScreen
+    CustomerAccount: {
+      screen: CustomerAccountStackNavigor
     }
   },
   {

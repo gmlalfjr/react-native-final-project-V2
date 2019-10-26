@@ -1,10 +1,7 @@
 import {
   FIND_ACCOUNT,
   FIND_ACCOUNT_ERROR,
-  FIND_ACCOUNT_SUCCES,
-  FIND_ALL_ACCOUNTS,
-  FIND_ALL_ACCOUNT_ERROR,
-  FIND_ALL_ACCOUNT_SUCCES
+  FIND_ACCOUNT_SUCCES
 } from "../actions/CustomerAccount";
 
 const initFindOneState = {
@@ -17,7 +14,7 @@ export function getByCIF(state = initFindOneState, action) {
   switch (action.type) {
     case FIND_ACCOUNT:
       return {
-        ...initFindAllState,
+        ...initFindOneState,
         loading: true,
         error: null
       };

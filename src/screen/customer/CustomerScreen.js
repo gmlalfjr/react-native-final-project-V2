@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, Image, StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { findOneCustomers } from "../../actions/CustomersActions";
 import { bindActionCreators } from "redux";
@@ -10,7 +10,7 @@ import { Block } from "../../components";
 import {
     Container,
     Header,
-    Content,
+    Text,
     ListItem,
     Body,
     Right,
@@ -30,11 +30,13 @@ class CustomerScreen extends Component {
   onReload() {
     this.props.findOneCustomers(this.state.search);
   }
+
   updateSearch = search => {
     this.setState({ search: search });
   };
+
   componentDidUpdate(prevProps, prevState) {
-    const { data, error } = this.props;
+    const { data, dataAcc, error } = this.props;
     if (data && prevProps.data == data) {
       this.onReload();
     }
@@ -50,9 +52,8 @@ class CustomerScreen extends Component {
   }
 
   showDetail(cif) {
-    const { error } = this.props;
     if (cif != null) {
-      this.props.navigation.navigate("CutomerDetail", { cif });
+      this.props.navigation.navigate("CustomerAccount", { cif:cif });
     } else {
       Toast.show({
         text: "Cif Already Exist",
@@ -64,9 +65,28 @@ class CustomerScreen extends Component {
     }
   }
 
+  renderListItem(data, index) {
+    return (
+          <ListItem thumbnail key={data.cif} onPress={() => this.showDetail(data.cif)}>
+            <Body>
+              <Text numberOfLines={1}>{data.firstName}</Text>
+              <Text note numberOfLines={1}>
+                Address : {data.address}
+              </Text>
+            </Body>
+            <Right>
+              <Button transparent>
+                <Animatable.View animation="fadeInLeft">
+                <Icon name="angle-right" type="FontAwesome5" />
+                </Animatable.View>
+              </Button>
+            </Right>
+          </ListItem>
+    );
+  }
+
   render() {
     const { search } = this.state;
-    const { data } = this.props;
     return (
       <Container>
         <Header>
@@ -92,32 +112,7 @@ class CustomerScreen extends Component {
           <Block flex={false} row style={styles.tabs}>
             <Text style={styles.textHeader}>Customers</Text>
           </Block>
-        <ListItem
-          style={styles.list}
-          onPress={() => this.showDetail(data.cif)}
-        >
-          <Body>
-            <Text numberOfLines={1}>
-              Cif           : {data.firstName}
-            </Text>
-            <Text numberOfLines={1}>
-              Name     : {data.firstName}
-            </Text>
-            <Text numberOfLines={1}>
-              Address : {data.address}
-            </Text>
-          </Body>
-          <Right>
-            <Button
-              transparent
-              onPress={() => this.showDetail(data.cif)}
-            >
-              <Animatable.View animation="fadeInLeft">
-                <Icon name="angle-right" type="FontAwesome5" />
-              </Animatable.View>
-            </Button>
-          </Right>
-        </ListItem>
+          {this.props.data.length && this.state.search != ""   ?  this.props.data.map((data, index)=>(this.renderListItem(data, index))) :<Text>Loading...</Text>}
       </Container>
     );
   }

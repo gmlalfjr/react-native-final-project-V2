@@ -5,5 +5,6 @@ import {
 import { getByCIF } from "./AccountReducer";
 const allReducers = combineReducers({
   findOneCustomers,
+  getByCIF
 });
 export default allReducers;
