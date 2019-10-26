@@ -19,7 +19,7 @@ import {
 } from "native-base";
 import { getAccountByCIF } from "../../actions/CustomerAccount";
 import { bindActionCreators } from "redux";
-class CustomerDetailScreen extends Component {
+class CustomerAccountScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -50,9 +50,9 @@ class CustomerDetailScreen extends Component {
     }
   }
 
-  showDetail(cif) {
-    if (cif != null) {
-      this.props.navigation.navigate("Loan", { cif:cif });
+  showDetail(accountNumber) {
+    if (accountNumber != null) {
+      this.props.navigation.navigate("Loan", { accountNumber:accountNumber });
     } else {
       Toast.show({
         text: "Cif Already Exist",
@@ -66,7 +66,7 @@ class CustomerDetailScreen extends Component {
 
   renderListItem(data, index) {
     return (
-      <ListItem thumbnail  key={"item-" + index} onPress={() => this.showDetail(data.accountNumber)}>
+      <ListItem thumbnail style={styles.list} key={"item-" + index} onPress={() => this.showDetail(data.accountNumber)}>
             <Body>
               <Text note numberOfLines={1}>Number Account : {data.accountNumber}</Text>
               <Text note numberOfLines={1}>Balance                 : Rp {data.accountBalance}</Text>
@@ -124,7 +124,7 @@ function matchDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   matchDispatchToProps
-)(CustomerDetailScreen);
+)(CustomerAccountScreen);
 
 const styles = StyleSheet.create({
   iconBack: {

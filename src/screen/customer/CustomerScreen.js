@@ -56,7 +56,7 @@ class CustomerScreen extends Component {
       this.props.navigation.navigate("CustomerAccount", { cif:cif });
     } else {
       Toast.show({
-        text: "Cif Already Exist",
+        text: "Please input CIF to Search",
         buttonText: 'Ok',
         type: "danger",
         duration: 5000,
@@ -67,7 +67,7 @@ class CustomerScreen extends Component {
 
   renderListItem(data, index) {
     return (
-          <ListItem thumbnail key={data.cif} onPress={() => this.showDetail(data.cif)}>
+          <ListItem thumbnail style={styles.list} key={data.cif} onPress={() => this.showDetail(data.cif)}>
             <Body>
               <Text numberOfLines={1}>{data.firstName}</Text>
               <Text note numberOfLines={1}>
