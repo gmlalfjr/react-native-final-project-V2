@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { StyleSheet, Image, RefreshControl } from "react-native";
-import { Button as ButtonEl } from "react-native-elements";
-import * as Animatable from "react-native-animatable";
 import { Block } from '../../components';
 import { theme } from '../../constants';
 import { connect } from "react-redux";
@@ -11,7 +9,6 @@ import {
   Content,
   ListItem,
   Body,
-  Right,
   Button,
   Icon,
   Text,
@@ -56,11 +53,11 @@ class BillingScreen extends Component {
     return (
       <ListItem thumbnail style={styles.list} key={"item-" + index}>
         <Body>
-          <Text note numberOfLines={1}>ID                 : {data.billingId}</Text>
-          <Text note numberOfLines={1}>Amount       : Rp. {data.billingAmount}</Text>
-          <Text note numberOfLines={1}>Date      : {data.billDate}</Text>
-          <Text note numberOfLines={1}>Due Date         : {data.billingDueDate}</Text>
-          <Text note numberOfLines={1}>Status  : {data.billingStatus}</Text>
+          <Text note numberOfLines={1}>ID               : {data.billingId}</Text>
+          <Text note numberOfLines={1}>Amount    : Rp. {data.billingAmount}</Text>
+          <Text note numberOfLines={1}>Date          : {data.billDate}</Text>
+          <Text note numberOfLines={1}>Due Date  : {data.billingDueDate}</Text>
+          <Text note numberOfLines={1}>Status       : {data.billingStatus}</Text>
         </Body>
       </ListItem>
     );
@@ -83,7 +80,7 @@ class BillingScreen extends Component {
             <Text style={styles.textHeader}>Billing ID {this.props.navigation.getParam("loanId")}</Text>
         </Block>
         <Content padder refreshControl={<RefreshControl refreshing={this.props.loading} onRefresh={() => this.reload()}/>}>
-          {this.props.data.length  ?  this.props.data.map((data, index)=>(this.renderListItem(data, index))) :<Text>Loading...</Text>}  
+          {this.props.data.length  ?  this.props.data.map((data, index)=>(this.renderListItem(data, index))) :<Text style={{textAlign: 'center'}}>Loading...</Text>}  
         </Content>
       </Container>
     );

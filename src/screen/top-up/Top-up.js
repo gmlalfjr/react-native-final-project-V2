@@ -18,10 +18,10 @@ import {
     Icon,
     Toast
   } from "native-base";
-class PopUp extends Component {
+class TopUp extends Component {
   state = {
     search: "",
-    cif: null
+    accountNumber: null
   };
 
   componentDidMount() {
@@ -40,20 +40,20 @@ class PopUp extends Component {
     if (data && prevProps.data == data) {
       this.onReload();
     }
-    // if (error && prevProps.error !== error) {
-    //   Toast.show({
-    //     text: error.message,
-    //     buttonText: 'Ok',
-    //     type: "warning",
-    //     duration: 1000,
-    //     position: 'top'
-    //   })
-    // }
+    if (error && prevProps.error !== error) {
+      Toast.show({
+        text: error.message,
+        buttonText: 'Ok',
+        type: "warning",
+        duration: 1000,
+        position: 'top'
+      })
+    }
   }
 
   showDetail(accountNumber) {
     if (accountNumber != null) {
-      this.props.navigation.navigate("Loan", { accountNumber:accountNumber });
+      this.props.navigation.navigate("Balance", { accountNumber:accountNumber });
     } else {
       Toast.show({
         text: "Cif Already Exist",
@@ -112,7 +112,7 @@ class PopUp extends Component {
           <Block flex={false} row style={styles.tabs}>
             <Text style={styles.textHeader}>Account</Text>
           </Block>
-          {this.props.data.length && this.state.search != ""   ?  this.props.data.map((data, index)=>(this.renderListItem(data, index))) :<Text>Loading...</Text>}
+          {this.props.data.length && this.state.search != ""   ?  this.props.data.map((data, index)=>(this.renderListItem(data, index))) :<Text style={{textAlign: 'center'}}>Search Account Number...</Text>}
       </Container>
     );
   }
@@ -132,7 +132,7 @@ function matchDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   matchDispatchToProps
-)(PopUp);
+)(TopUp);
 
 const styles = StyleSheet.create({
   iconBack: {

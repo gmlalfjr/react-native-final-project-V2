@@ -5,7 +5,8 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import { Icon } from "native-base";
 import CustomerStackNavigor from "./CustomerRoutes";
 import CameraStackNavigator from "./CameraRoutes";
-import PopUpStackNavigor from "./Pop-upRoutes";
+import TopUpStackNavigor from "./Top-upRoutes";
+import { AboutScreen } from "../screen/about/AboutScreen";
 
 const TabNavigatorCustomer = createBottomTabNavigator(
   {
@@ -24,8 +25,8 @@ const TabNavigatorCustomer = createBottomTabNavigator(
         )
       }
     },
-    PopUp: {
-      screen: PopUpStackNavigor,
+    TopUp: {
+      screen: TopUpStackNavigor,
       navigationOptions: {
         tabBarIcon: ({ tintColor, focused }) => (
           <Icon
@@ -84,7 +85,7 @@ const TabNavigatorCustomer = createBottomTabNavigator(
   }
 );
 
-const TabNavigatorPopUp = createBottomTabNavigator(
+const TabNavigatorTopUp = createBottomTabNavigator(
   {
     Customer: {
       screen: CustomerStackNavigor,
@@ -101,8 +102,8 @@ const TabNavigatorPopUp = createBottomTabNavigator(
         )
       }
     },
-    PopUp: {
-      screen: PopUpStackNavigor,
+    TopUp: {
+      screen: TopUpStackNavigor,
       navigationOptions: {
         tabBarIcon: ({ tintColor, focused }) => (
           <Icon
@@ -133,7 +134,7 @@ const TabNavigatorPopUp = createBottomTabNavigator(
     }
   },
   {
-    initialRouteName: "PopUp"
+    initialRouteName: "TopUp"
   },
   {
     defaultNavigationOptions: {
@@ -178,8 +179,8 @@ const TabNavigatorQR = createBottomTabNavigator(
         )
       }
     },
-    PopUp: {
-      screen: PopUpStackNavigor,
+    TopUp: {
+      screen: TopUpStackNavigor,
       navigationOptions: {
         tabBarIcon: ({ tintColor, focused }) => (
           <Icon
@@ -241,8 +242,9 @@ const TabNavigatorQR = createBottomTabNavigator(
 const HomeStackNavigor = createStackNavigator(
   {
     Customer: TabNavigatorCustomer,
-    PopUp: TabNavigatorPopUp,
+    TopUp: TabNavigatorTopUp,
     QR: TabNavigatorQR,
+    About: AboutScreen,
     Home: {
       screen: HomeScreen
     }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Image, RefreshControl, Alert } from "react-native";
+import { StyleSheet, Image, RefreshControl } from "react-native";
 import { Button as ButtonEl } from "react-native-elements";
 import * as Animatable from "react-native-animatable";
 import { Block } from '../../components';
@@ -11,11 +11,10 @@ import {
   Content,
   ListItem,
   Body,
-  Right,
   Button,
   Icon,
   Text,
-  Toast
+  Toast,
 } from "native-base";
 import { findLoan } from "../../actions/LoanAction";
 import { bindActionCreators } from "redux";
@@ -45,15 +44,15 @@ class LoanScreen extends Component {
   }
   componentDidUpdate(prevProps, prevState) {
     const { error } = this.props;
-    // if (error && prevProps.error !== error) {
-    //   Toast.show({
-    //     text: error.message,
-    //     buttonText: 'Ok',
-    //     type: "warning",
-    //     duration: 5000,
-    //     position: 'top'
-    //   })
-    // }
+    if (error && prevProps.error !== error) {
+      Toast.show({
+        text: error.message,
+        buttonText: 'Ok',
+        type: "warning",
+        duration: 5000,
+        position: 'top'
+      })
+    }
   }
 
   showDetail(loanId) {
@@ -70,20 +69,6 @@ class LoanScreen extends Component {
     }
   }
 
-  goBack() {     
-      Alert.alert(
-          'Warning!',
-          ' Are you sure to cancel Pop-up ? ',
-          [                              
-            {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {text: 'Cancel Pop-up', onPress: () => {        
-              this.props.navigation.navigate('Home')
-            }},
-          ],
-          { cancelable: false }
-      ); 
-  }
-
   renderListItem(data, index) {
     return (
       <ListItem thumbnail style={styles.list} key={"item-" + index}>
@@ -97,11 +82,9 @@ class LoanScreen extends Component {
           <Text note numberOfLines={1}>Tenor           : {data.loanTenor}</Text>
           <Text note numberOfLines={1}>Type Code  : {data.loanTypeCode}</Text>
           <Text note numberOfLines={1}>CIF               : {data.customerCif}</Text>
-          <Button onPress={() => this.showDetail(data.loanId)}>
-            <Animatable.View animation="flash">
-              <Text style={{textAlign: 'center'}}>Billing</Text>
-            </Animatable.View>
-          </Button>
+          <Animatable.View animation="flash">
+            <ButtonEl title="Billing" onPress={() => this.showDetail(data.loanId)}/>
+          </Animatable.View>
         </Body>
       </ListItem>
     );
@@ -114,7 +97,7 @@ class LoanScreen extends Component {
           <Button
             transparent
             style={styles.iconBack}
-            onPress={() => this.goBack()}
+            onPress={() => this.props.navigation.navigate('CustomerAccount')}
           >
             <Icon name="angle-left" type="FontAwesome5" />
           </Button>
@@ -124,7 +107,7 @@ class LoanScreen extends Component {
             <Text style={styles.textHeader}>Account {this.props.navigation.getParam("accountNumber")}</Text>
         </Block>
         <Content padder refreshControl={<RefreshControl refreshing={this.props.loading} onRefresh={() => this.reload()}/>}>
-          {this.props.data.length  ?  this.props.data.map((data, index)=>(this.renderListItem(data, index))) :<Text>Loading...</Text>}  
+          {this.props.data.length  ?  this.props.data.map((data, index)=>(this.renderListItem(data, index))) :<Text style={{textAlign: 'center'}}>Loading...</Text>}  
         </Content>
       </Container>
     );

@@ -75,7 +75,7 @@ class CustomerScreen extends Component {
               </Text>
             </Body>
             <Right>
-              <Button transparent>
+              <Button transparent onPress={() => this.showDetail(data.cif)}>
                 <Animatable.View animation="fadeInLeft">
                 <Icon name="angle-right" type="FontAwesome5" />
                 </Animatable.View>
@@ -112,7 +112,7 @@ class CustomerScreen extends Component {
           <Block flex={false} row style={styles.tabs}>
             <Text style={styles.textHeader}>Customers</Text>
           </Block>
-          {this.props.data.length && this.state.search != ""   ?  this.props.data.map((data, index)=>(this.renderListItem(data, index))) :<Text>Loading...</Text>}
+          {this.props.data.length && this.state.search != ""   ?  this.props.data.map((data, index)=>(this.renderListItem(data, index))) :<Text style={{textAlign: 'center'}}>Search Cif Customer...</Text>}
       </Container>
     );
   }

@@ -1,5 +1,6 @@
 import { createStackNavigator } from "react-navigation-stack";
 import CameraExample from "../screen/camera/CameraScreen";
+import CustomerAccountStackNavigor from "./AccountRoutes";
 const CameraStackNavigator = createStackNavigator(
   {
     Camera: {
@@ -7,11 +8,15 @@ const CameraStackNavigator = createStackNavigator(
       navigationOptions: {
         header: null
       }
+    },
+    CustomerAccount: {
+      screen: CustomerAccountStackNavigor
     }
   },
 
   {
-    initialRouteName: "Camera"
+    initialRouteName: "Camera",
+    headerMode: 'none'
   }
 );
 

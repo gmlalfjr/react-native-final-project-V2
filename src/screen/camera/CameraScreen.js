@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Text, View, StyleSheet, Button, Alert, Image, Dimensions } from "react-native";
-import { Button as BUts } from "react-native-elements";
 import { Header, Button as ButtoN, Icon, Container  } from "native-base";
 import * as Permissions from "expo-permissions";
 import { findOneCustomers } from "../../actions/CustomersActions";
@@ -8,7 +7,6 @@ import { bindActionCreators } from "redux";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { connect } from "react-redux";
 import { theme } from "../../constants";
-import { Block } from "../../components";
 
 const { width } = Dimensions.get('screen');
 
@@ -93,24 +91,6 @@ class BarcodeScannerExample extends React.Component {
               </View>
             </View>
           </View>
-        {/* <View
-        style={{
-          flex: 1,
-          flexDirection: "column",
-          justifyContent: "flex-end"
-          }}
-          >
-          <BarCodeScanner
-            onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanned}
-            style={StyleSheet.absoluteFillObject}
-          />
-          {scanned && (
-            <Button
-              title={"Tap to Scan Again"}
-              onPress={() => this.setState({ scanned: false })}
-            />
-          )}
-        </View> */}
       </Container>
     );
   }
@@ -124,7 +104,6 @@ class BarcodeScannerExample extends React.Component {
 
   handleBarCodeScanned = async ({ type, data }) => {
     this.setState({ scanned: true });
-    //alert(`Bar code with type ${type} and data ${data} has been scanned!`);
     this.props.findOneCustomers(data);
     if (this.props.error == null) {
       Alert.alert(
@@ -134,11 +113,10 @@ class BarcodeScannerExample extends React.Component {
           {
             text: "Yes",
             onPress: () => {
-              this.props.navigation.navigate("CutomerDetail", {
+              this.props.navigation.navigate("CustomerAccount", {
                 cif: data
               });
             }
-            // onPress: () => Linking.openURL(this.state.scanned)
           },
           { text: "No", onPress: () => {} }
         ],
