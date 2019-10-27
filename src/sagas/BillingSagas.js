@@ -5,11 +5,11 @@ import {
   FIND_BILLING_SUCCES,
 } from "../actions/BiliingAction";
 import { filterFetch } from "../utils/apiUtils";
-
+import { url } from "../utils/api";
 
 function* findBilling(action) {
   try {
-    const data = yield filterFetch('http://192.168.1.16:8080/billing/loanId?loanId=' + action.loanId, {
+    const data = yield filterFetch(url + '/billing/loanId?loanId=' + action.loanId, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json'},
     });
