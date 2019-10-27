@@ -9,7 +9,7 @@ import { filterFetch } from "../utils/apiUtils";
 
 function* findLoan(action) {
   try {
-    const data = yield filterFetch('http://192.168.1.16:8080/loan/' + action.accountNumber, {
+    const data = yield filterFetch('http://192.168.1.16:8080/loan/accountNumber?accountNumber=' + action.accountNumber, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json'},
     });
