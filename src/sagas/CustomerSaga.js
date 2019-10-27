@@ -5,11 +5,12 @@ import {
   FIND_CUSTOMER_SUCCES,
 } from "../actions/CustomersActions";
 import { filterFetch } from "../utils/apiUtils";
+import { url } from "../utils/api";
 
 
 function* findOneCustomers(action) {
   try {
-    const data = yield filterFetch('http://192.168.1.16:8080/customer/' + action.cif, {
+    const data = yield filterFetch(url + '/customer/' + action.cif, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json'},
     });

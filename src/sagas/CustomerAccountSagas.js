@@ -4,11 +4,12 @@ import {
   FIND_ACCOUNT_ERROR,
   FIND_ACCOUNT_SUCCES
 } from "../actions/CustomerAccount";
-import { filterFetch } from "../utils/apiUtils"
+import { filterFetch } from "../utils/apiUtils";
+import { url } from "../utils/api";
 
 function* getAccountByCIF(action) {
   try {
-    const data = yield filterFetch('http://192.168.1.16:8080/account/cif?cif=' + action.cif, {
+    const data = yield filterFetch(url + '/account/cif?cif=' + action.cif, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json'},
     });

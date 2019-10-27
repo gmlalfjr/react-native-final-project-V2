@@ -5,11 +5,12 @@ import {
   FIND_LOAN_SUCCES,
 } from "../actions/LoanAction";
 import { filterFetch } from "../utils/apiUtils";
+import { url } from "../utils/api";
 
 
 function* findLoan(action) {
   try {
-    const data = yield filterFetch('http://192.168.1.16:8080/loan/accountNumber?accountNumber=' + action.accountNumber, {
+    const data = yield filterFetch(url + '/loan/accountNumber?accountNumber=' + action.accountNumber, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json'},
     });
