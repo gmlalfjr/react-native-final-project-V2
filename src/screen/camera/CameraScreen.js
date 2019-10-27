@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, View, StyleSheet, Button, Alert, Image } from "react-native";
+import { Text, View, StyleSheet, Button, Alert, Image, Dimensions } from "react-native";
 import { Button as BUts } from "react-native-elements";
 import { Header, Button as ButtoN, Icon, Container  } from "native-base";
 import * as Permissions from "expo-permissions";
@@ -9,6 +9,8 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import { connect } from "react-redux";
 import { theme } from "../../constants";
 import { Block } from "../../components";
+
+const { width } = Dimensions.get('screen');
 
 class BarcodeScannerExample extends React.Component {
   state = {
@@ -26,6 +28,27 @@ class BarcodeScannerExample extends React.Component {
   };
 
   render() {
+    const leftTop = {
+      borderLeftWidth: 3,
+      borderTopWidth: 3,
+      bordeColor: 'white'
+    };
+    const leftBottom = {
+      borderLeftWidth: 3,
+      borderBottomWidth: 3,
+      bordeColor: 'white'
+    };
+    const rightTop = {
+      borderRightWidth: 3,
+      borderTopWidth: 3,
+      bordeColor: 'white'
+    };
+    const rightBottom = {
+      borderRightWidth: 3,
+      borderBottomWidth: 3,
+      bordeColor: 'white'
+    };
+
     const { hasCameraPermission, scanned } = this.state;
 
     if (hasCameraPermission === null) {
@@ -49,10 +72,28 @@ class BarcodeScannerExample extends React.Component {
               style={{ width: 105, height: 33, top: 12 }}
             />
           </Header>
-        <Block flex={false} row style={styles.tabs}>
-          <Text style={styles.textHeader}>Customers</Text>
-        </Block>
-        <View
+          <View style={{flex: 1}}>
+            <BarCodeScanner
+              onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanned}
+              style={StyleSheet.absoluteFillObject}
+            />  
+            <View style={{...StyleSheet.absoluteFill, alignItems: 'center', justifyContent: 'center'}}>
+              <View style={{ width: width / 2, height: width / 2}}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <View style={{flex: 1, ...leftTop}} />
+                  <View style={{flex: 1}} />
+                  <View style={{flex: 1, ...rightTop}} />
+                </View>
+                <View style={{flex: 1}} />
+                <View style={{flex: 1, flexDirection: 'row'}} >
+                  <View style={{flex: 1, ...leftBottom}} />
+                  <View style={{flex: 1}} />
+                  <View style={{flex: 1, ...rightBottom}} />
+                </View>
+              </View>
+            </View>
+          </View>
+        {/* <View
         style={{
           flex: 1,
           flexDirection: "column",
@@ -69,7 +110,7 @@ class BarcodeScannerExample extends React.Component {
               onPress={() => this.setState({ scanned: false })}
             />
           )}
-        </View>
+        </View> */}
       </Container>
     );
   }

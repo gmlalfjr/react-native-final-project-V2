@@ -2,7 +2,10 @@ import { takeLatest, put } from "redux-saga/effects";
 import {
   FIND_ACCOUNT,
   FIND_ACCOUNT_ERROR,
-  FIND_ACCOUNT_SUCCES
+  FIND_ACCOUNT_SUCCES,
+  FIND_ACCOUNT_NUMBER,
+  FIND_ACCOUNT_NUMBER_SUCCES,
+  FIND_ACCOUNT_NUMBER_ERROR
 } from "../actions/CustomerAccount";
 import { filterFetch } from "../utils/apiUtils";
 import { url } from "../utils/api";
@@ -25,8 +28,30 @@ function* getAccountByCIF(action) {
   }
 }
 
+function* getAccountByAccountNumber(action) {
+  try {
+    const data = yield filterFetch(url + '/account/' + action.accountNumber, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json'},
+    });
+    yield put({
+      type: FIND_ACCOUNT_NUMBER_SUCCES,
+      data: data
+    });
+  } catch (error) {
+    yield put({
+      type: FIND_ACCOUNT_NUMBER_ERROR,
+      error: error
+    });
+  }
+}
+
 export function* watchgetAccountByCIF() {
   yield takeLatest(FIND_ACCOUNT, getAccountByCIF);
+}
+
+export function* watchgetAccountByAccountNumber() {
+  yield takeLatest(FIND_ACCOUNT_NUMBER, getAccountByAccountNumber);
 }
 
 

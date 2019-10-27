@@ -80,7 +80,7 @@ class BillingScreen extends Component {
           <Image source={require('../../../assets/image.png')} style={{width: 105, height: 33, top: 12}}/>
         </Header>
         <Block flex={false} row style={styles.tabs}>
-            <Text style={styles.textHeader}>Billing {this.props.navigation.getParam("loanId")}</Text>
+            <Text style={styles.textHeader}>Billing ID {this.props.navigation.getParam("loanId")}</Text>
         </Block>
         <Content padder refreshControl={<RefreshControl refreshing={this.props.loading} onRefresh={() => this.reload()}/>}>
           {this.props.data.length  ?  this.props.data.map((data, index)=>(this.renderListItem(data, index))) :<Text>Loading...</Text>}  

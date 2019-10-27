@@ -62,28 +62,12 @@ export default class HomeScreen extends Component {
                     <Text medium height={20}>Customer</Text>
                   </Card>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Transaction')}>
-                  <Card center middle shadow style={styles.bodyMenu}>
-                    <Badge margin={[0, 0, 15]} size={50} color="rgba(0, 162, 255, 1)">
-                      <Image source={require('../../../assets/icons/transaction.png')} />
-                    </Badge>
-                    <Text medium height={20}>Transaction</Text>
-                  </Card>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Credit')}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('PopUp')}>
                   <Card center middle shadow style={styles.bodyMenu}>
                     <Badge margin={[0, 0, 15]} size={50} color="rgba(0, 162, 255, 1)">
                       <Image source={require('../../../assets/icons/credit.png')} />
                     </Badge>
-                    <Text medium height={20}>Credit</Text>
-                  </Card>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('m-Payment')}>
-                  <Card center middle shadow style={styles.bodyMenu}>
-                    <Badge margin={[0, 0, 15]} size={50} color="rgba(0, 162, 255, 1)">
-                      <Image source={require('../../../assets/icons/credit.png')} />
-                    </Badge>
-                    <Text medium height={20}>m-Payment</Text>
+                    <Text medium height={20}>Pop-Up</Text>
                   </Card>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('QR')}>
@@ -92,6 +76,14 @@ export default class HomeScreen extends Component {
                       <Image source={require('../../../assets/icons/qr-code.png')} />
                     </Badge>
                     <Text medium height={20}>QR</Text>
+                  </Card>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Credit')}>
+                  <Card center middle shadow style={styles.bodyMenu}>
+                    <Badge margin={[0, 0, 15]} size={50} color="rgba(0, 162, 255, 1)">
+                      <Image source={require('../../../assets/icons/transaction.png')} />
+                    </Badge>
+                    <Text medium height={20}>About</Text>
                   </Card>
                 </TouchableOpacity>
             </Block>
