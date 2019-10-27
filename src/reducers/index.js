@@ -1,12 +1,13 @@
 import { combineReducers } from "redux";
 import { findOneCustomers } from "./CustomersReducer";
 import { findLoan } from "./LoanReducer";
-import { getByCIF } from "./AccountReducer";
+import { getByCIF, getByAccountNumber } from "./AccountReducer";
 import { findBilling } from "./BillingReducer";
 const allReducers = combineReducers({
   findOneCustomers,
   getByCIF,
   findLoan,
-  findBilling
+  findBilling,
+  getByAccountNumber
 });
 export default allReducers;

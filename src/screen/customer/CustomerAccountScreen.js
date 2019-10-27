@@ -39,15 +39,15 @@ class CustomerAccountScreen extends Component {
   }
   componentDidUpdate(prevProps, prevState) {
     const { error } = this.props;
-    if (error && prevProps.error !== error) {
-      Toast.show({
-        text: error.message,
-        buttonText: 'Ok',
-        type: "warning",
-        duration: 5000,
-        position: 'top'
-      })
-    }
+    // if (error && prevProps.error !== error) {
+    //   Toast.show({
+    //     text: error.message,
+    //     buttonText: 'Ok',
+    //     type: "warning",
+    //     duration: 5000,
+    //     position: 'top'
+    //   })
+    // }
   }
 
   showDetail(accountNumber) {
@@ -97,7 +97,7 @@ class CustomerAccountScreen extends Component {
           <Image source={require('../../../assets/image.png')} style={{width: 105, height: 33, top: 12}}/>
         </Header>
         <Block flex={false} row style={styles.tabs}>
-            <Text style={styles.textHeader}>Account {this.props.navigation.getParam("cif")}</Text>
+            <Text style={styles.textHeader}>Account Number {this.props.navigation.getParam("cif")}</Text>
         </Block>
         <Content padder refreshControl={<RefreshControl refreshing={this.props.loading} onRefresh={() => this.reload()}/>}>
           {this.props.data.length  ?  this.props.data.map((data, index)=>(this.renderListItem(data, index))) :<Text>Loading...</Text>}  

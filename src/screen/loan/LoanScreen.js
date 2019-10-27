@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Image, RefreshControl } from "react-native";
+import { StyleSheet, Image, RefreshControl, Alert } from "react-native";
 import { Button as ButtonEl } from "react-native-elements";
 import * as Animatable from "react-native-animatable";
 import { Block } from '../../components';
@@ -45,15 +45,15 @@ class LoanScreen extends Component {
   }
   componentDidUpdate(prevProps, prevState) {
     const { error } = this.props;
-    if (error && prevProps.error !== error) {
-      Toast.show({
-        text: error.message,
-        buttonText: 'Ok',
-        type: "warning",
-        duration: 5000,
-        position: 'top'
-      })
-    }
+    // if (error && prevProps.error !== error) {
+    //   Toast.show({
+    //     text: error.message,
+    //     buttonText: 'Ok',
+    //     type: "warning",
+    //     duration: 5000,
+    //     position: 'top'
+    //   })
+    // }
   }
 
   showDetail(loanId) {
@@ -68,6 +68,20 @@ class LoanScreen extends Component {
         position: 'top'
       })
     }
+  }
+
+  goBack() {     
+      Alert.alert(
+          'Warning!',
+          ' Are you sure to cancel Pop-up ? ',
+          [                              
+            {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+            {text: 'Cancel Pop-up', onPress: () => {        
+              this.props.navigation.navigate('Home')
+            }},
+          ],
+          { cancelable: false }
+      ); 
   }
 
   renderListItem(data, index) {
@@ -100,7 +114,7 @@ class LoanScreen extends Component {
           <Button
             transparent
             style={styles.iconBack}
-            onPress={() => this.props.navigation.navigate('CustomerAccount')}
+            onPress={() => this.goBack()}
           >
             <Icon name="angle-left" type="FontAwesome5" />
           </Button>
