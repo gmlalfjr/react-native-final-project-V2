@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, RefreshControl } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { getAccountByAccountNumber } from "../../actions/CustomerAccount";
 import { bindActionCreators } from "redux";
@@ -7,8 +7,10 @@ import * as Animatable from "react-native-animatable";
 import { connect } from "react-redux";
 import { theme } from "../../constants";
 import { Block } from "../../components";
+import CurrencyFormatter from '../../constants/CurrencyFormatter';
 import {
     Container,
+    Content,
     Header,
     Text,
     ListItem,
@@ -18,15 +20,16 @@ import {
     Icon,
     Toast
   } from "native-base";
-class PopUp extends Component {
+class TopUp extends Component {
   state = {
     search: "",
-    cif: null
+    accountNumber: null
   };
 
   componentDidMount() {
     this.onReload();
   }
+
   onReload() {
     this.props.getAccountByAccountNumber(this.state.search);
   }
@@ -36,24 +39,27 @@ class PopUp extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { data, error } = this.props;
+    const { data, upData, error } = this.props;
     if (data && prevProps.data == data) {
       this.onReload();
     }
-    // if (error && prevProps.error !== error) {
-    //   Toast.show({
-    //     text: error.message,
-    //     buttonText: 'Ok',
-    //     type: "warning",
-    //     duration: 1000,
-    //     position: 'top'
-    //   })
-    // }
+    if (upData && prevProps.upData !== upData) {
+      this.onReload();
+    }
+    if (error && prevProps.error !== error) {
+      Toast.show({
+        text: error.message,
+        buttonText: 'Ok',
+        type: "warning",
+        duration: 1000,
+        position: 'top'
+      })
+    }
   }
 
   showDetail(accountNumber) {
     if (accountNumber != null) {
-      this.props.navigation.navigate("Loan", { accountNumber:accountNumber });
+      this.props.navigation.navigate("Balance", { accountNumber:accountNumber });
     } else {
       Toast.show({
         text: "Cif Already Exist",
@@ -71,7 +77,7 @@ class PopUp extends Component {
             <Body>
               <Text numberOfLines={1}>{data.customerCif}</Text>
               <Text note numberOfLines={1}>
-                Balance : Rp. {data.accountBalance}
+                Balance : { CurrencyFormatter(data.accountBalance) }
               </Text>
             </Body>
             <Right>
@@ -112,7 +118,9 @@ class PopUp extends Component {
           <Block flex={false} row style={styles.tabs}>
             <Text style={styles.textHeader}>Account</Text>
           </Block>
-          {this.props.data.length && this.state.search != ""   ?  this.props.data.map((data, index)=>(this.renderListItem(data, index))) :<Text>Loading...</Text>}
+          <Content refreshControl={<RefreshControl refreshing={this.props.loading} onRefresh={() => this.onReload()}/>}>
+          {this.props.data.length && this.state.search != ""   ?  this.props.data.map((data, index)=>(this.renderListItem(data, index))) :<Text style={{textAlign: 'center'}}>Search Account Number...</Text>}
+          </Content>
       </Container>
     );
   }
@@ -122,6 +130,7 @@ function mapStateToProps(state) {
   return {
     loading: state.getByAccountNumber.loading,
     data: state.getByAccountNumber.data,
+    upData: state.putBalance.data,
     error: state.getByAccountNumber.error,
   };
 }
@@ -132,7 +141,7 @@ function matchDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   matchDispatchToProps
-)(PopUp);
+)(TopUp);
 
 const styles = StyleSheet.create({
   iconBack: {

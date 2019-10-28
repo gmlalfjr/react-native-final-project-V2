@@ -1,5 +1,5 @@
 import { watchFindOneCustomers } from "./CustomerSaga";
-import { watchgetAccountByCIF, watchgetAccountByAccountNumber } from "./CustomerAccountSagas";
+import { watchgetAccountByCIF, watchgetAccountByAccountNumber, watchputBalance } from "./CustomerAccountSagas";
 import { watchFindLoan } from "./LoanSagas";
 import { watchFindBilling } from "./BillingSagas";
 import { all, fork } from "redux-saga/effects";
@@ -10,7 +10,7 @@ export default function* sagas() {
     fork(watchgetAccountByCIF),
     fork(watchFindLoan),
     fork(watchFindBilling),
-    fork(watchgetAccountByAccountNumber)
-    
+    fork(watchgetAccountByAccountNumber),
+    fork(watchputBalance)
   ]);
 }

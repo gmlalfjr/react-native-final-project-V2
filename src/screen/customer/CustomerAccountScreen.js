@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { StyleSheet, Image, RefreshControl } from "react-native";
-import { Button as ButtonEl } from "react-native-elements";
 import * as Animatable from "react-native-animatable";
 import { Block } from '../../components';
 import { theme } from '../../constants';
 import { connect } from "react-redux";
+import CurrencyFormatter from "../../constants/CurrencyFormatter"
 import {
   Container,
   Header,
@@ -33,23 +33,13 @@ class CustomerAccountScreen extends Component {
   componentDidMount() {
     this.reload();
   }
-
-  reload() {
-    this.props.getAccountByCIF(this.props.navigation.getParam("cif"));
-  }
-  componentDidUpdate(prevProps, prevState) {
-    const { error } = this.props;
-    // if (error && prevProps.error !== error) {
-    //   Toast.show({
-    //     text: error.message,
-    //     buttonText: 'Ok',
-    //     type: "warning",
-    //     duration: 5000,
-    //     position: 'top'
-    //   })
-    // }
+  
+  async reload() {
+    const data = await this.props.getAccountByCIF(this.props.navigation.getParam("cif"));
+    return data
   }
 
+  
   showDetail(accountNumber) {
     if (accountNumber != null) {
       this.props.navigation.navigate("Loan", { accountNumber:accountNumber });
@@ -69,11 +59,11 @@ class CustomerAccountScreen extends Component {
       <ListItem thumbnail style={styles.list} key={"item-" + index} onPress={() => this.showDetail(data.accountNumber)}>
             <Body>
               <Text note numberOfLines={1}>Number Account : {data.accountNumber}</Text>
-              <Text note numberOfLines={1}>Balance                 : Rp {data.accountBalance}</Text>
+              <Text note numberOfLines={1}>Balance                 : {CurrencyFormatter(data.accountBalance)}</Text>
               <Text note numberOfLines={1}>Create Date          : {data.createdAt}</Text>
             </Body>
             <Right>
-              <Button transparent>
+              <Button transparent onPress={() => this.showDetail(data.accountNumber)}>
                 <Animatable.View animation="fadeInLeft">
                 <Icon name="angle-right" type="FontAwesome5" />
                 </Animatable.View>
@@ -100,7 +90,7 @@ class CustomerAccountScreen extends Component {
             <Text style={styles.textHeader}>Account Number {this.props.navigation.getParam("cif")}</Text>
         </Block>
         <Content padder refreshControl={<RefreshControl refreshing={this.props.loading} onRefresh={() => this.reload()}/>}>
-          {this.props.data.length  ?  this.props.data.map((data, index)=>(this.renderListItem(data, index))) :<Text>Loading...</Text>}  
+          {this.props.data.length  ?  this.props.data.map((data, index)=>(this.renderListItem(data, index))) :<Text style={{textAlign: 'center'}}>Loading...</Text>}  
         </Content>
       </Container>
     );
@@ -111,7 +101,7 @@ function mapStateToProps(state) {
   return {
     loading: state.getByCIF.loading,
     data: state.getByCIF.data,
-    error: state.getByCIF.error
+    error: state.getByCIF.error,
   };
 }
 function matchDispatchToProps(dispatch) {
