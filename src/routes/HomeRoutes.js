@@ -7,6 +7,7 @@ import CustomerStackNavigor from "./CustomerRoutes";
 import CameraStackNavigator from "./CameraRoutes";
 import TopUpStackNavigor from "./Top-upRoutes";
 import { AboutScreen } from "../screen/about/AboutScreen";
+import LoginScreen from "../screen/login/LoginScreen";
 
 const TabNavigatorCustomer = createBottomTabNavigator(
   {
@@ -245,6 +246,7 @@ const HomeStackNavigor = createStackNavigator(
     TopUp: TabNavigatorTopUp,
     QR: TabNavigatorQR,
     About: AboutScreen,
+    Logout: LoginScreen,
     Home: {
       screen: HomeScreen
     }

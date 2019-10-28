@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Image, ScrollView, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import { Image, ScrollView, TouchableOpacity, StyleSheet, Dimensions, Alert } from "react-native";
 import { Card, Badge, Block, Text } from '../../components';
 import { theme } from '../../constants';
-import { Header, Container } from "native-base";
+import { Header, Container, Button, Icon } from "native-base";
 
 export const { width } = Dimensions.get('window');
 
@@ -30,12 +30,33 @@ export default class HomeScreen extends Component {
     )
   }
 
+  Logout() {
+    Alert.alert(
+      'Warning!',
+      ' Are you sure you want to Logout ? ',
+      [                              
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Logout', onPress: () => {        
+          this.props.navigation.navigate("Login")
+        }},
+      ],
+      { cancelable: true }
+    ); 
+  }
+
   render() {
     const tabs = ['Menu'];
 
     return (
       <Container>
         <Header>
+        <Button
+            transparent
+            style={styles.iconBack}
+            onPress={() => this.Logout()}
+          >
+            <Icon name="logout" type="SimpleLineIcons" />
+          </Button>
           <Image source={require('../../../assets/image.png')} style={{width: 105, height: 33, top: 12}}/>
         </Header>
         <Block>
@@ -122,5 +143,11 @@ const styles = StyleSheet.create({
     minWidth: (width - (theme.sizes.padding * 2.4) - theme.sizes.base) / 2,
     maxWidth: (width - (theme.sizes.padding * 2.4) - theme.sizes.base) / 2,
     maxHeight: (width - (theme.sizes.padding * 2.4) - theme.sizes.base) / 2,
-  }
+  },
+  iconBack: {
+    zIndex: 9,
+    position: "absolute",
+    top: 6,
+    left: 5
+  },
 });
