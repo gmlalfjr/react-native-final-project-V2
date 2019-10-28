@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, RefreshControl } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { getAccountByAccountNumber } from "../../actions/CustomerAccount";
 import { bindActionCreators } from "redux";
@@ -7,8 +7,10 @@ import * as Animatable from "react-native-animatable";
 import { connect } from "react-redux";
 import { theme } from "../../constants";
 import { Block } from "../../components";
+import CurrencyFormatter from '../../constants/CurrencyFormatter';
 import {
     Container,
+    Content,
     Header,
     Text,
     ListItem,
@@ -27,6 +29,7 @@ class TopUp extends Component {
   componentDidMount() {
     this.onReload();
   }
+
   onReload() {
     this.props.getAccountByAccountNumber(this.state.search);
   }
@@ -36,8 +39,11 @@ class TopUp extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { data, error } = this.props;
+    const { data, upData, error } = this.props;
     if (data && prevProps.data == data) {
+      this.onReload();
+    }
+    if (upData && prevProps.upData !== upData) {
       this.onReload();
     }
     if (error && prevProps.error !== error) {
@@ -71,7 +77,7 @@ class TopUp extends Component {
             <Body>
               <Text numberOfLines={1}>{data.customerCif}</Text>
               <Text note numberOfLines={1}>
-                Balance : Rp. {data.accountBalance}
+                Balance : { CurrencyFormatter(data.accountBalance) }
               </Text>
             </Body>
             <Right>
@@ -112,7 +118,9 @@ class TopUp extends Component {
           <Block flex={false} row style={styles.tabs}>
             <Text style={styles.textHeader}>Account</Text>
           </Block>
+          <Content refreshControl={<RefreshControl refreshing={this.props.loading} onRefresh={() => this.onReload()}/>}>
           {this.props.data.length && this.state.search != ""   ?  this.props.data.map((data, index)=>(this.renderListItem(data, index))) :<Text style={{textAlign: 'center'}}>Search Account Number...</Text>}
+          </Content>
       </Container>
     );
   }
@@ -122,6 +130,7 @@ function mapStateToProps(state) {
   return {
     loading: state.getByAccountNumber.loading,
     data: state.getByAccountNumber.data,
+    upData: state.putBalance.data,
     error: state.getByAccountNumber.error,
   };
 }

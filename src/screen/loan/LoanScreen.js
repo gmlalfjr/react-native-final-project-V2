@@ -5,6 +5,7 @@ import * as Animatable from "react-native-animatable";
 import { Block } from '../../components';
 import { theme } from '../../constants';
 import { connect } from "react-redux";
+import CurrencyFormatter from "../../constants/CurrencyFormatter"
 import {
   Container,
   Header,
@@ -74,8 +75,8 @@ class LoanScreen extends Component {
       <ListItem thumbnail style={styles.list} key={"item-" + index}>
         <Body>
           <Text note numberOfLines={1}>ID                 : {data.loanId}</Text>
-          <Text note numberOfLines={1}>Amount       : Rp. {data.loanAmount}</Text>
-          <Text note numberOfLines={1}>Balance      : Rp. {data.loanBalance}</Text>
+          <Text note numberOfLines={1}>Amount       : {CurrencyFormatter(data.loanAmount)}</Text>
+          <Text note numberOfLines={1}>Balance      : {CurrencyFormatter(data.loanBalance)}</Text>
           <Text note numberOfLines={1}>Status         : {data.loanStatus}</Text>
           <Text note numberOfLines={1}>Open Date  : {data.openDate}</Text>
           <Text note numberOfLines={1}>Due Date     : {data.dueDate}</Text>

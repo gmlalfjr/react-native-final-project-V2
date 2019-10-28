@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, RefreshControl } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { findOneCustomers } from "../../actions/CustomersActions";
 import { bindActionCreators } from "redux";
@@ -9,6 +9,7 @@ import { theme } from "../../constants";
 import { Block } from "../../components";
 import {
     Container,
+    Content,
     Header,
     Text,
     ListItem,
@@ -112,7 +113,9 @@ class CustomerScreen extends Component {
           <Block flex={false} row style={styles.tabs}>
             <Text style={styles.textHeader}>Customers</Text>
           </Block>
-          {this.props.data.length && this.state.search != ""   ?  this.props.data.map((data, index)=>(this.renderListItem(data, index))) :<Text style={{textAlign: 'center'}}>Search Cif Customer...</Text>}
+          <Content refreshControl={<RefreshControl refreshing={this.props.loading} onRefresh={() => this.onReload()}/>}>
+            {this.props.data.length && this.state.search != ""   ?  this.props.data.map((data, index)=>(this.renderListItem(data, index))) :<Text style={{textAlign: 'center'}}>Search Cif Customer...</Text>}
+          </Content>
       </Container>
     );
   }

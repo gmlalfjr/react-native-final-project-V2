@@ -4,6 +4,7 @@ import * as Animatable from "react-native-animatable";
 import { Block } from '../../components';
 import { theme } from '../../constants';
 import { connect } from "react-redux";
+import CurrencyFormatter from "../../constants/CurrencyFormatter"
 import {
   Container,
   Header,
@@ -58,7 +59,7 @@ class CustomerAccountScreen extends Component {
       <ListItem thumbnail style={styles.list} key={"item-" + index} onPress={() => this.showDetail(data.accountNumber)}>
             <Body>
               <Text note numberOfLines={1}>Number Account : {data.accountNumber}</Text>
-              <Text note numberOfLines={1}>Balance                 : Rp {data.accountBalance}</Text>
+              <Text note numberOfLines={1}>Balance                 : {CurrencyFormatter(data.accountBalance)}</Text>
               <Text note numberOfLines={1}>Create Date          : {data.createdAt}</Text>
             </Body>
             <Right>

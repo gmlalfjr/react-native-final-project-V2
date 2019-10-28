@@ -77,7 +77,7 @@ class Balance extends Component {
               <Text style={styles.textHeader}>Top up Balance {this.props.navigation.getParam("accountNumber")}</Text>
           </Block>
           <Form>
-              <Input style={styles.textInput} onChangeText={(accountBalance) => this.setState({accountBalance})} placeholder="Type Balance"/>
+              <Input style={styles.textInput} onChangeText={(accountBalance) => this.setState({accountBalance})} placeholder="Rp."/>
               <Animatable.View animation="flash">
                 <ButtonEl transparent containerStyle={styles.button} onPress={ () => {       
                   Alert.alert(

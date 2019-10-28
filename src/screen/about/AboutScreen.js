@@ -33,15 +33,19 @@ export class AboutScreen extends Component {
         </Block>
         <ListItem 
         title="Herdiansyah"
+        contentContainerStyle={styles.list}
         />
         <ListItem 
         title="Gamal"
+        contentContainerStyle={styles.list}
         />
         <ListItem 
         title="Kevin"
+        contentContainerStyle={styles.list}
         />
         <ListItem 
         title="Heriyanto"
+        contentContainerStyle={styles.list}
         />
       </Container>
     );
@@ -65,10 +69,11 @@ const styles = StyleSheet.create({
   textHeader: {
     fontSize: 26,
     fontWeight: "bold",
-    paddingBottom: 10
+    paddingBottom: 10,
   },
   list: {
-    marginRight: 32,
-    marginLeft: 32
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
