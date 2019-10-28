@@ -74,8 +74,8 @@ class LoanScreen extends Component {
     return (
       <ListItem thumbnail style={styles.list} key={"item-" + index}>
         <Body>
-          <Text note numberOfLines={1}>ID                 : {data.loanId}</Text>
-          <Text note numberOfLines={1}>Amount       : {CurrencyFormatter(data.loanAmount)}</Text>
+          <Text note numberOfLines={1}>ID                : {data.loanId}</Text>
+          <Text note numberOfLines={1}>Amount      : {CurrencyFormatter(data.loanAmount)}</Text>
           <Text note numberOfLines={1}>Balance      : {CurrencyFormatter(data.loanBalance)}</Text>
           <Text note numberOfLines={1}>Status         : {data.loanStatus}</Text>
           <Text note numberOfLines={1}>Open Date  : {data.openDate}</Text>
