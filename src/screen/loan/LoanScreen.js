@@ -19,6 +19,7 @@ import {
 } from "native-base";
 import { findLoan } from "../../actions/LoanAction";
 import { bindActionCreators } from "redux";
+import { colors } from "../../constants/theme";
 class LoanScreen extends Component {
   constructor(props) {
     super(props);
@@ -70,6 +71,20 @@ class LoanScreen extends Component {
     }
   }
 
+  showBalance(accountNumber) {
+    if (accountNumber != null) {
+      this.props.navigation.navigate("Balance", { accountNumber:accountNumber });
+    } else {
+      Toast.show({
+        text: "Cif Already Exist",
+        buttonText: 'Ok',
+        type: "danger",
+        duration: 5000,
+        position: 'top'
+      })
+    }
+  }
+
   renderListItem(data, index) {
     return (
       <ListItem thumbnail style={styles.list} key={"item-" + index}>
@@ -84,7 +99,8 @@ class LoanScreen extends Component {
           <Text note numberOfLines={1}>Type Code  : {data.loanTypeCode}</Text>
           <Text note numberOfLines={1}>CIF               : {data.customerCif}</Text>
           <Animatable.View animation="flash">
-            <ButtonEl title="Billing" onPress={() => this.showDetail(data.loanId)}/>
+            <ButtonEl title="Billing" buttonStyle={{marginBottom: 10, marginTop: 10, borderRadius: 35, backgroundColor: "gray"}} onPress={() => this.showDetail(data.loanId)}/>
+            <ButtonEl title="Top-Up" buttonStyle={{borderRadius: 35}} onPress={() => this.showBalance(data.accountNumber)}/>
           </Animatable.View>
         </Body>
       </ListItem>
@@ -98,14 +114,14 @@ class LoanScreen extends Component {
           <Button
             transparent
             style={styles.iconBack}
-            onPress={() => this.props.navigation.navigate('CustomerAccount')}
+            onPress={() => this.props.navigation.goBack(null)}
           >
             <Icon name="angle-left" type="FontAwesome5" />
           </Button>
           <Image source={require('../../../assets/image.png')} style={{width: 105, height: 33, top: 12}}/>
         </Header>
         <Block flex={false} row style={styles.tabs}>
-            <Text style={styles.textHeader}>Account {this.props.navigation.getParam("accountNumber")}</Text>
+            <Text style={styles.textHeader}>Loan Account {this.props.navigation.getParam("accountNumber")}</Text>
         </Block>
         <Content padder refreshControl={<RefreshControl refreshing={this.props.loading} onRefresh={() => this.reload()}/>}>
           {this.props.data.length  ?  this.props.data.map((data, index)=>(this.renderListItem(data, index))) :<Text style={{textAlign: 'center'}}>Loading...</Text>}  

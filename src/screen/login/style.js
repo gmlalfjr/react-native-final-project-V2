@@ -1,42 +1,62 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+const { width: WIDTH } = Dimensions.get('window')
 
 export const styles = StyleSheet.create({
-  container: {
+  backgroundContainer: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+    width: null,
+    height: null,
+    justifyContent: "center",
+    alignItems: "center"
   },
-  button: {
-    backgroundColor: 'white',
+  logo: {
+    width: 220,
     height: 70,
-    marginHorizontal: 20,
-    borderRadius: 35,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 5,
-    shadowOffset: { width: 2, height: 2},
-    shadowColor: 'black',
-    shadowOpacity: 0.2
   },
-  textInput: {
-    height: 50,
+  logoContainer: {
+    alignItems: "center",
+    marginBottom: 80
+  },
+  logotext: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: "500",
+    marginTop: 10,
+    opacity: 0.5
+  },
+  input: {
+    width: WIDTH - 55,
+    height: 45,
     borderRadius: 25,
-    borderWidth: 0.5,
-    marginHorizontal: 20,
-    paddingLeft: 10,
-    marginVertical: 5,
-    borderColor: 'rgba(0,0,0,0.2)'
+    fontSize: 16,
+    paddingLeft: 45,
+    backgroundColor: 'rgba(0,0,0,0.35)',
+    color: 'rgba(225,225,255,0.7)',
+    marginHorizontal: 25,
+    marginTop: 10
   },
-  closeButton: {
-    height: 40,
-    width: 40,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
+  inputIcon: {
+    position: "absolute",
+    top: 20,
+    left: 37
+  },
+  btnEye: {
     position: 'absolute',
-    top: -40,
-    left: "43%"
+    top: 20,
+    right: 40
+  },
+  btnLogin: {
+    width: WIDTH - 55,
+    height: 45,
+    borderRadius: 25,
+    backgroundColor: '#3498db',
+    justifyContent: "center",
+    marginTop: 20
+  },
+  textLogin: {
+    textAlign: "center",
+    fontSize: 20,
+    color: 'white'
   }
   });
   

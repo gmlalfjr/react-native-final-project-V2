@@ -94,7 +94,7 @@ class CustomerScreen extends Component {
           <Button
             transparent
             style={styles.iconBack}
-            onPress={() => this.props.navigation.navigate("Home")}
+            onPress={() => this.props.navigation.goBack(null)}
           >
             <Icon name="angle-left" type="FontAwesome5" />
           </Button>

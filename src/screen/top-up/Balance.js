@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert, Image, StyleSheet, Text, View } from "react-native";
+import { Alert, Image, StyleSheet, Text } from "react-native";
 import * as Animatable from 'react-native-animatable';
 import { Button as ButtonEl } from "react-native-elements"
 import { theme } from "../../constants";
@@ -50,7 +50,7 @@ class Balance extends Component {
     const { Balance } = this.props;
     var data = Balance || {}; 
     if (data != this.state) {
-        this.props.navigation.navigate("TopUp");
+        this.props.navigation.goBack(null);
     }
   }
 
@@ -63,7 +63,7 @@ class Balance extends Component {
             <Button
                 transparent
                 style={styles.iconBack}
-                onPress={() => this.props.navigation.navigate("TopUp")}
+                onPress={() => this.props.navigation.goBack(null)}
             >
                 <Icon name="angle-left" type="FontAwesome5" />
             </Button>
@@ -79,7 +79,7 @@ class Balance extends Component {
           <Form>
               <Input style={styles.textInput} onChangeText={(accountBalance) => this.setState({accountBalance})} placeholder="Rp."/>
               <Animatable.View animation="flash">
-                <ButtonEl transparent containerStyle={styles.button} onPress={ () => {       
+                <ButtonEl transparent buttonStyle={{borderRadius: 35}} containerStyle={styles.button} onPress={ () => {       
                   Alert.alert(
                       'Warning!',
                       ' Are you sure you want to Top-Up ? ',
